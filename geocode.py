@@ -1,3 +1,8 @@
+import pandas as pd
+from geopy.geocoders import Nominatim
+
+known = pd.read_pickle('./data/known.pkl')
+
 # Geocode
 
 postal = known['destination_postal']
