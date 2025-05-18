@@ -32,3 +32,6 @@ for index,row in lanes.iterrows():
 
 lane_distances = pd.DataFrame(distances, columns = ['origin_postal', 'destination_postal', 'distance_km'])
 lane_distances.to_pickle('./data/lane_distances.pkl')
+
+
+###########################

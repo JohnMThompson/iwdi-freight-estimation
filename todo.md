@@ -2,11 +2,14 @@
 
 ## Steps to Complete
 
-- [ ] Import all postal codes
+- [X] Import all postal codes
   - Limit to USA only
-- [ ] Geocode all postal codes
+- [X] Geocode all postal codes
   - This will be difficult given API rate limiting. Does a dataset already exist with lat/long for each Postal?
-- [ ] Calculate distance between all postal codes
-  - Cross join of all postal codes
-- [ ] Find 3 nearest neighbors with cost data for every postal
-  - If a postal has cost data, we don't calculate nearest
+- [ ] Calculate nearest 3 known points for each unknown
+  - [ ] Pre-batch somehow to reduce distance calcs
+  - by 2 digit postals and adjacent?
+  - States and adjacent?
+  - [ ] Find 3 nearest
+  - [ ] Average costs
+  - [ ] Save the three nearest for each unknown point to visualize later?
