@@ -172,3 +172,5 @@ cython_debug/
 
 # Project files
 test.py
+node_modules/
+frontend/dist/

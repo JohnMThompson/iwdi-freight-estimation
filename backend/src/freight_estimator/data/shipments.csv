@@ -1,0 +1,91 @@
+origin_id,origin_name,origin_latitude,origin_longitude,destination_zip,destination_name,destination_latitude,destination_longitude,observed_cost
+mpls,"Minneapolis, MN",44.9778,-93.265,55101,"Saint Paul, MN",44.9444,-93.0933,500.00
+mpls,"Minneapolis, MN",44.9778,-93.265,53202,"Milwaukee, WI",43.0389,-87.9065,950.47
+mpls,"Minneapolis, MN",44.9778,-93.265,60601,"Chicago, IL",41.8864,-87.6231,1293.48
+mpls,"Minneapolis, MN",44.9778,-93.265,63101,"St. Louis, MO",38.627,-90.1994,1501.65
+mpls,"Minneapolis, MN",44.9778,-93.265,48226,"Detroit, MI",42.3314,-83.0458,1533.15
+mpls,"Minneapolis, MN",44.9778,-93.265,44114,"Cleveland, OH",41.4993,-81.6944,1878.26
+mpls,"Minneapolis, MN",44.9778,-93.265,55415,"Minneapolis South, MN",44.97,-93.25,500.00
+mpls,"Minneapolis, MN",44.9778,-93.265,75201,"Dallas, TX",32.7876,-96.7994,2224.81
+mpls,"Minneapolis, MN",44.9778,-93.265,73102,"Oklahoma City, OK",35.4676,-97.5164,2142.23
+mpls,"Minneapolis, MN",44.9778,-93.265,72201,"Little Rock, AR",34.7465,-92.2896,2021.15
+mpls,"Minneapolis, MN",44.9778,-93.265,70112,"New Orleans, LA",29.9511,-90.0715,2828.68
+mpls,"Minneapolis, MN",44.9778,-93.265,77002,"Houston, TX",29.7604,-95.3698,2814.92
+mpls,"Minneapolis, MN",44.9778,-93.265,75001,"Dallas North, TX",32.9618,-96.8292,2416.52
+mpls,"Minneapolis, MN",44.9778,-93.265,30303,"Atlanta, GA",33.7525,-84.3915,2588.02
+mpls,"Minneapolis, MN",44.9778,-93.265,28202,"Charlotte, NC",35.2271,-80.8431,2410.20
+mpls,"Minneapolis, MN",44.9778,-93.265,35203,"Birmingham, AL",33.5186,-86.8104,2271.21
+mpls,"Minneapolis, MN",44.9778,-93.265,29601,"Greenville, SC",34.8526,-82.394,2377.98
+mpls,"Minneapolis, MN",44.9778,-93.265,32801,"Orlando, FL",28.5383,-81.3792,3370.95
+mpls,"Minneapolis, MN",44.9778,-93.265,20001,"Washington, DC",38.9072,-77.0369,2576.98
+mpls,"Minneapolis, MN",44.9778,-93.265,19103,"Philadelphia, PA",39.9526,-75.1652,2603.58
+mpls,"Minneapolis, MN",44.9778,-93.265,10001,"New York, NY",40.7506,-73.9972,2899.69
+mpls,"Minneapolis, MN",44.9778,-93.265,02108,"Boston, MA",42.357,-71.0637,2961.93
+mpls,"Minneapolis, MN",44.9778,-93.265,27601,"Raleigh, NC",35.7796,-78.6382,2672.88
+mpls,"Minneapolis, MN",44.9778,-93.265,97201,"Portland, OR",45.5152,-122.6784,3576.59
+mpls,"Minneapolis, MN",44.9778,-93.265,94103,"San Francisco, CA",37.7739,-122.4312,4039.41
+mpls,"Minneapolis, MN",44.9778,-93.265,90012,"Los Angeles, CA",34.0522,-118.2437,3750.82
+mpls,"Minneapolis, MN",44.9778,-93.265,85004,"Phoenix, AZ",33.4484,-112.074,3228.07
+mpls,"Minneapolis, MN",44.9778,-93.265,84101,"Salt Lake City, UT",40.7608,-111.891,2600.25
+mpls,"Minneapolis, MN",44.9778,-93.265,87102,"Albuquerque, NM",35.0844,-106.6504,2698.67
+mpls,"Minneapolis, MN",44.9778,-93.265,80903,"Colorado Springs, CO",38.8339,-104.8214,2229.98
+dallas,"Dallas, TX",32.7767,-96.797,55401,"Minneapolis, MN",44.9833,-93.2667,2378.36
+dallas,"Dallas, TX",32.7767,-96.797,53202,"Milwaukee, WI",43.0389,-87.9065,2294.34
+dallas,"Dallas, TX",32.7767,-96.797,60601,"Chicago, IL",41.8864,-87.6231,2175.48
+dallas,"Dallas, TX",32.7767,-96.797,46204,"Indianapolis, IN",39.7684,-86.1581,2056.65
+dallas,"Dallas, TX",32.7767,-96.797,48226,"Detroit, MI",42.3314,-83.0458,2561.03
+dallas,"Dallas, TX",32.7767,-96.797,44114,"Cleveland, OH",41.4993,-81.6944,2627.57
+dallas,"Dallas, TX",32.7767,-96.797,43215,"Columbus, OH",39.9612,-82.9988,2569.54
+dallas,"Dallas, TX",32.7767,-96.797,75201,"Dallas, TX",32.7876,-96.7994,500.00
+dallas,"Dallas, TX",32.7767,-96.797,73102,"Oklahoma City, OK",35.4676,-97.5164,783.92
+dallas,"Dallas, TX",32.7767,-96.797,64106,"Kansas City, MO",39.0997,-94.5786,1418.45
+dallas,"Dallas, TX",32.7767,-96.797,70112,"New Orleans, LA",29.9511,-90.0715,1270.25
+dallas,"Dallas, TX",32.7767,-96.797,77002,"Houston, TX",29.7604,-95.3698,1064.52
+dallas,"Dallas, TX",32.7767,-96.797,78701,"Austin, TX",30.2672,-97.7431,961.72
+dallas,"Dallas, TX",32.7767,-96.797,30303,"Atlanta, GA",33.7525,-84.3915,2116.18
+dallas,"Dallas, TX",32.7767,-96.797,28202,"Charlotte, NC",35.2271,-80.8431,2608.57
+dallas,"Dallas, TX",32.7767,-96.797,37201,"Nashville, TN",36.1627,-86.7816,1893.26
+dallas,"Dallas, TX",32.7767,-96.797,29601,"Greenville, SC",34.8526,-82.394,2235.71
+dallas,"Dallas, TX",32.7767,-96.797,32801,"Orlando, FL",28.5383,-81.3792,2725.18
+dallas,"Dallas, TX",32.7767,-96.797,33130,"Miami, FL",25.7617,-80.1918,2896.11
+dallas,"Dallas, TX",32.7767,-96.797,19103,"Philadelphia, PA",39.9526,-75.1652,3443.05
+dallas,"Dallas, TX",32.7767,-96.797,10001,"New York, NY",40.7506,-73.9972,3474.99
+dallas,"Dallas, TX",32.7767,-96.797,15222,"Pittsburgh, PA",40.4406,-79.9959,2887.56
+dallas,"Dallas, TX",32.7767,-96.797,27601,"Raleigh, NC",35.7796,-78.6382,2990.83
+dallas,"Dallas, TX",32.7767,-96.797,97201,"Portland, OR",45.5152,-122.6784,4030.30
+dallas,"Dallas, TX",32.7767,-96.797,98101,"Seattle, WA",47.6101,-122.3344,4059.92
+dallas,"Dallas, TX",32.7767,-96.797,90012,"Los Angeles, CA",34.0522,-118.2437,3365.56
+dallas,"Dallas, TX",32.7767,-96.797,85004,"Phoenix, AZ",33.4484,-112.074,2339.12
+dallas,"Dallas, TX",32.7767,-96.797,80202,"Denver, CO",39.7525,-104.9995,2089.24
+dallas,"Dallas, TX",32.7767,-96.797,87102,"Albuquerque, NM",35.0844,-106.6504,1790.86
+dallas,"Dallas, TX",32.7767,-96.797,80903,"Colorado Springs, CO",38.8339,-104.8214,1858.33
+atl,"Atlanta, GA",33.749,-84.388,55401,"Minneapolis, MN",44.9833,-93.2667,2609.65
+atl,"Atlanta, GA",33.749,-84.388,55101,"Saint Paul, MN",44.9444,-93.0933,2620.97
+atl,"Atlanta, GA",33.749,-84.388,60601,"Chicago, IL",41.8864,-87.6231,1695.85
+atl,"Atlanta, GA",33.749,-84.388,46204,"Indianapolis, IN",39.7684,-86.1581,1537.85
+atl,"Atlanta, GA",33.749,-84.388,63101,"St. Louis, MO",38.627,-90.1994,1556.25
+atl,"Atlanta, GA",33.749,-84.388,44114,"Cleveland, OH",41.4993,-81.6944,1614.40
+atl,"Atlanta, GA",33.749,-84.388,43215,"Columbus, OH",39.9612,-82.9988,1515.43
+atl,"Atlanta, GA",33.749,-84.388,55415,"Minneapolis South, MN",44.97,-93.25,2561.04
+atl,"Atlanta, GA",33.749,-84.388,73102,"Oklahoma City, OK",35.4676,-97.5164,2202.23
+atl,"Atlanta, GA",33.749,-84.388,64106,"Kansas City, MO",39.0997,-94.5786,1875.52
+atl,"Atlanta, GA",33.749,-84.388,72201,"Little Rock, AR",34.7465,-92.2896,1651.87
+atl,"Atlanta, GA",33.749,-84.388,77002,"Houston, TX",29.7604,-95.3698,1985.80
+atl,"Atlanta, GA",33.749,-84.388,78701,"Austin, TX",30.2672,-97.7431,2138.37
+atl,"Atlanta, GA",33.749,-84.388,75001,"Dallas North, TX",32.9618,-96.8292,2203.30
+atl,"Atlanta, GA",33.749,-84.388,28202,"Charlotte, NC",35.2271,-80.8431,1060.79
+atl,"Atlanta, GA",33.749,-84.388,37201,"Nashville, TN",36.1627,-86.7816,1051.61
+atl,"Atlanta, GA",33.749,-84.388,35203,"Birmingham, AL",33.5186,-86.8104,637.21
+atl,"Atlanta, GA",33.749,-84.388,32801,"Orlando, FL",28.5383,-81.3792,1344.73
+atl,"Atlanta, GA",33.749,-84.388,33130,"Miami, FL",25.7617,-80.1918,1758.01
+atl,"Atlanta, GA",33.749,-84.388,20001,"Washington, DC",38.9072,-77.0369,1655.85
+atl,"Atlanta, GA",33.749,-84.388,10001,"New York, NY",40.7506,-73.9972,2059.93
+atl,"Atlanta, GA",33.749,-84.388,15222,"Pittsburgh, PA",40.4406,-79.9959,1450.20
+atl,"Atlanta, GA",33.749,-84.388,02108,"Boston, MA",42.357,-71.0637,2580.01
+atl,"Atlanta, GA",33.749,-84.388,97201,"Portland, OR",45.5152,-122.6784,5505.79
+atl,"Atlanta, GA",33.749,-84.388,98101,"Seattle, WA",47.6101,-122.3344,5341.00
+atl,"Atlanta, GA",33.749,-84.388,94103,"San Francisco, CA",37.7739,-122.4312,5316.48
+atl,"Atlanta, GA",33.749,-84.388,85004,"Phoenix, AZ",33.4484,-112.074,4062.94
+atl,"Atlanta, GA",33.749,-84.388,80202,"Denver, CO",39.7525,-104.9995,3085.85
+atl,"Atlanta, GA",33.749,-84.388,84101,"Salt Lake City, UT",40.7608,-111.891,4142.88
+atl,"Atlanta, GA",33.749,-84.388,80903,"Colorado Springs, CO",38.8339,-104.8214,3059.84
