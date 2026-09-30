@@ -143,6 +143,12 @@ app.add_middleware(
 )
 
 
+@app.get("/healthz", include_in_schema=False)
+async def healthcheck() -> dict[str, str]:
+    """Report process availability without checking data or dependencies."""
+    return {"status": "ok"}
+
+
 @app.get("/api/origins", response_model=list[OriginResponse])
 async def list_origins() -> list[OriginResponse]:
     return [OriginResponse(id=row.id, name=row.name, latitude=row.latitude, longitude=row.longitude) for row in ORIGINS]
