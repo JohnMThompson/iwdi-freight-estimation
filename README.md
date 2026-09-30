@@ -32,7 +32,7 @@ Open the local URL printed by Vite. The development server proxies `/api` reques
 
 ## Estimation method
 
-For one origin, the estimator first filters observed destinations to a configurable maximum straight-line distance, then selects up to K of the closest eligible observations. It never reaches beyond the configured radius to fill K. The initial working default is 600 miles; it is configurable and has not been validated as an accuracy threshold. It computes great-circle distance in miles and weights each cost by `1 / distance^p`. The estimate is the weighted mean. The API returns each contributor's distance, raw IDW weight, normalized weight, and weighted cost contribution, so the result can be inspected directly.
+For one origin, the estimator fits a linear distance baseline across that origin's known lanes: fixed charge plus a per-mile rate. It uses saved OSRM driving miles for the baseline when available, with 1.18 times great-circle distance as a fallback. For local adjustments, it filters observed destinations to a configurable maximum great-circle distance, selects up to K of the closest eligible observations, and uses inverse distance weighting to interpolate their deviations from the baseline. The estimate is the fitted baseline at the requested lane distance plus the weighted local adjustment. It never reaches beyond the configured radius to fill K. The initial working default is 600 miles; it is configurable and has not been validated as an accuracy threshold. The API returns both geographic and baseline route distances, each contributor's IDW weight, observed cost, residual from the baseline, and weighted residual adjustment, so the result can be inspected directly.
 
 When the requested destination has an observation for the selected origin, the application returns that exact observed cost rather than calculating an interpolation. The UI labels this case as an observed rate. If no observations fall inside the selected radius, the model returns an insufficient-data result without an estimate.
 
@@ -50,6 +50,8 @@ The generated records are checked in at `backend/src/freight_estimator/data/ship
 cd backend
 python -m freight_estimator.data.synthetic
 ```
+
+`backend/src/freight_estimator/data/osrm_driving_miles.csv` contains a comparison snapshot of routed and great-circle distances for all 120 origin-destination pairs in the demo catalog. The routed distances were retrieved from the public OSRM demo service on 2026-09-30 with its `driving` profile. They follow car routing and are not truck-specific mileage. The demo service is best-effort, requests no more frequent than once per second, and does not guarantee availability ([OSRM demo guidance](https://github.com/Project-OSRM/osrm-backend/wiki/Demo-server)). OSRM routes are based on OpenStreetMap data; credit OpenStreetMap contributors and link to the [ODbL license information](https://www.openstreetmap.org/copyright).
 
 ## API
 

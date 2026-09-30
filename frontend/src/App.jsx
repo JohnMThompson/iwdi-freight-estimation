@@ -4,6 +4,13 @@ import FreightMap from './Map.jsx';
 
 const money = (value) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
 const DEFAULTS = { k: 5, power: 2, maxDistance: 600 };
+
+function openSelectPicker(event) {
+  if (event.target.closest('select')) return;
+  const select = event.currentTarget.querySelector('select');
+  if (select && typeof select.showPicker === 'function') select.showPicker();
+  else select?.focus();
+}
 const COVERAGE_LABELS = {
   strong: 'Strong',
   moderate: 'Moderate',
@@ -57,10 +64,11 @@ export default function App() {
 
   useEffect(() => {
     if (!originId) return;
+    setDestinationZip('');
+    setDestinations([]);
+    setResult(null);
     getDestinations(originId).then((rows) => {
       setDestinations(rows);
-      setDestinationZip(rows.find((row) => !row.has_observation)?.zip || rows[0]?.zip || '');
-      setResult(null);
     }).catch((err) => setError(err.message));
   }, [originId]);
 
@@ -97,8 +105,10 @@ export default function App() {
       <section className="intro" id="top">
         <div className="intro-copy">
           <div className="eyebrow"><span>PRICING TOOLKIT</span><span className="eyebrow-line" /> SPATIAL ESTIMATION</div>
-          <h1>A clearer view of<br /><em>what freight might cost.</em></h1>
-          <p>Estimate a lane from the places you already know.<br />Every number is grounded in nearby observed rates.</p>
+          <div className="intro-content">
+            <h1>A clearer view of<br /><em>what freight might cost.</em></h1>
+            <p>Estimate a lane from the places you already know. Every number is grounded in nearby observed rates.</p>
+          </div>
         </div>
       </section>
 
@@ -107,16 +117,16 @@ export default function App() {
           <div className="section-kicker"><span>01</span> DEFINE YOUR LANE</div>
           <form onSubmit={submit}>
             <label className="field-label" htmlFor="origin">SHIP FROM</label>
-            <div className="select-wrap"><span className="field-symbol origin-symbol">↗</span>
+            <div className="select-wrap" onClick={openSelectPicker}><span className="field-symbol origin-symbol">↗</span>
               <select id="origin" value={originId} onChange={(event) => { setOriginId(event.target.value); setResult(null); }}>
                 {origins.map((row) => <option value={row.id} key={row.id}>{row.name}</option>)}
-              </select><span className="select-chevron">⌄</span>
+              </select><span className="select-chevron" aria-hidden="true">⌄</span>
             </div>
             <label className="field-label second-label" htmlFor="destination">SHIP TO</label>
-            <div className="select-wrap"><span className="field-symbol target-symbol">◎</span>
+            <div className="select-wrap" onClick={openSelectPicker}><span className="field-symbol target-symbol">◎</span>
               <select id="destination" value={destinationZip} onChange={(event) => { setDestinationZip(event.target.value); setResult(null); }}>
                 {destinations.map((row) => <option value={row.zip} key={row.zip}>{row.zip} · {row.name} {row.has_observation ? '· known' : '· estimate'}</option>)}
-              </select><span className="select-chevron">⌄</span>
+              </select><span className="select-chevron" aria-hidden="true">⌄</span>
             </div>
             {destination && <div className="destination-hint"><span className="hint-dot" />{destination.has_observation ? 'Known lane' : 'No exact history'}<span className="hint-coordinate">{destination.name}</span></div>}
 
@@ -144,7 +154,7 @@ export default function App() {
             </button>
           </form>
           {error && <div className="error-box">{error}. Confirm the API is running at localhost:8000.</div>}
-          <div className="method-note"><span className="note-icon">i</span><p><strong>A simple, explainable model.</strong><br />Nearby historical destinations carry more weight. No black box, just distance and observed cost.</p></div>
+          <div className="method-note"><span className="note-icon">i</span><p><strong>A simple, explainable model.</strong><br />A fitted distance baseline is adjusted by nearby historical lanes.</p></div>
         </aside>
 
         <section className="results-area">
@@ -158,7 +168,7 @@ export default function App() {
           </div>
 
           <div className="estimate-summary">
-            <div className={`cost-block ${result?.status === 'insufficient_data' ? 'cost-unavailable' : ''}`}><span className="field-label">{result?.is_observed ? 'OBSERVED LINEHAUL' : 'ESTIMATED LINEHAUL'}</span><div className="cost-value">{result?.estimated_cost != null ? money(result.estimated_cost) : result?.status === 'insufficient_data' ? 'NO ESTIMATE' : <span className="cost-placeholder">— — —</span>}{result?.estimated_cost != null && <span className="cost-unit">USD / LOAD</span>}</div></div>
+            <div className={`cost-block ${result?.status === 'insufficient_data' ? 'cost-unavailable' : ''}`}><span className="field-label">{result?.is_observed ? 'OBSERVED LINEHAUL' : 'ESTIMATED LINEHAUL'}</span><div className="cost-value">{result?.estimated_cost != null ? money(result.estimated_cost) : result?.status === 'insufficient_data' ? 'NO ESTIMATE' : <span className="cost-placeholder">— — —</span>}{result?.estimated_cost != null && <span className="cost-unit">USD / LOAD</span>}</div>{result && !result.is_observed && result.distance_baseline != null && <small className="baseline-note">{result.baseline_distance_source === 'osrm' ? 'OSRM car-route distance' : '1.18× straight-line fallback'}: {result.baseline_distance_miles.toFixed(0)} mi. Baseline: {money(result.baseline_fixed_cost)} + {money(result.baseline_per_mile_rate)}/mi; local weights use straight-line proximity.</small>}</div>
             <div className="summary-divider" />
             <CoverageSummary result={result} />
           </div>
@@ -168,12 +178,12 @@ export default function App() {
           </div>
           <div className="observations-section">
             <div className="observations-title"><div><div className="section-kicker"><span>04</span> THE SUPPORTING EVIDENCE</div><h3>{result?.status === 'insufficient_data' ? 'No contributing observations' : 'Nearby known lanes'}</h3></div><span className="table-count">{result ? `${result.neighbors.length} OBSERVATIONS` : 'AWAITING ESTIMATE'}</span></div>
-            <div className="observation-table-wrap"><table><thead><tr><th>DESTINATION</th><th>OBSERVED<br />LINEHAUL</th><th>DISTANCE</th><th>WEIGHT</th><th>CONTRIBUTION</th></tr></thead><tbody>
-              {result?.neighbors.map((item, index) => <tr key={item.destination.id}><td><span className="row-index">0{index + 1}</span><span className="destination-cell"><strong>{item.destination.zip}</strong><small>{item.destination.name}</small></span></td><td>{money(item.observed_cost)}</td><td>{item.distance_miles.toFixed(0)} <span className="cell-unit">mi</span></td><td><span className="weight-cell">{(item.normalized_weight * 100).toFixed(1)}<small>%</small><i><b style={{ width: `${item.normalized_weight * 100}%` }} /></i></span></td><td>{money(item.contribution)}</td></tr>)}
-              {!result && <tr><td colSpan="5" className="empty-table">Request an estimate to see the historical lanes behind it.</td></tr>}
-              {result?.status === 'insufficient_data' && <tr><td colSpan="5" className="empty-table">No observations for this origin are within {result.max_observation_distance_miles} miles of this destination.</td></tr>}
+            <div className="observation-table-wrap"><table><thead><tr><th>DESTINATION</th><th>OBSERVED<br />LINEHAUL</th><th>PROXIMITY</th><th>ROAD<br />MILES</th><th>WEIGHT</th><th>LOCAL<br />ADJUSTMENT</th></tr></thead><tbody>
+              {result?.neighbors.map((item, index) => <tr key={item.destination.id}><td><span className="row-index">0{index + 1}</span><span className="destination-cell"><strong>{item.destination.zip}</strong><small>{item.destination.name}</small></span></td><td>{money(item.observed_cost)}</td><td>{item.distance_miles.toFixed(0)} <span className="cell-unit">mi</span></td><td>{item.baseline_distance_miles.toFixed(0)} <span className="cell-unit">mi</span></td><td><span className="weight-cell">{(item.normalized_weight * 100).toFixed(1)}<small>%</small><i><b style={{ width: `${item.normalized_weight * 100}%` }} /></i></span></td><td>{money(item.residual_contribution)}</td></tr>)}
+              {!result && <tr><td colSpan="6" className="empty-table">Request an estimate to see the historical lanes behind it.</td></tr>}
+              {result?.status === 'insufficient_data' && <tr><td colSpan="6" className="empty-table">No observations for this origin are within {result.max_observation_distance_miles} miles of this destination.</td></tr>}
             </tbody></table></div>
-            {result?.status === 'estimated' && <div className="table-footnote">Weight share sums to 100%. Contribution = observed linehaul × normalized IDW weight. Only observations within the selected radius are eligible.</div>}
+            {result?.status === 'estimated' && <div className="table-footnote">Estimate = fitted baseline using OSRM road miles (or 1.18× straight-line fallback) + weighted local adjustments. Geographic distance selects and weights neighbors; route miles set the per-mile trend. The road distances use a car profile, not truck routing.</div>}
           </div>
           </div>
         </section>

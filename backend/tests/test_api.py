@@ -30,7 +30,10 @@ def test_estimate_response_contains_explainable_neighbors():
     assert result["max_observation_distance_miles"] == 600
     assert result["coverage"]["eligible_observation_count"] >= result["coverage"]["used_observation_count"]
     assert result["coverage"]["used_observation_count"] == len(result["neighbors"])
+    assert result["baseline_distance_source"] == "osrm"
+    assert result["baseline_distance_miles"] > 0
     assert {"observed_cost", "distance_miles", "idw_weight", "normalized_weight", "contribution"} <= result["neighbors"][0].keys()
+    assert result["neighbors"][0]["baseline_distance_source"] == "osrm"
 
 
 def test_insufficient_data_is_a_successful_domain_response():

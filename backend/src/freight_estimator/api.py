@@ -22,6 +22,7 @@ from freight_estimator.domain import (
 from freight_estimator.data.synthetic import DESTINATIONS, ORIGINS, Origin
 
 DATA_FILE = Path(__file__).with_name("data") / "shipments.csv"
+ROUTE_MILES_FILE = Path(__file__).with_name("data") / "osrm_driving_miles.csv"
 
 
 class LocationResponse(BaseModel):
@@ -60,6 +61,10 @@ class NeighborResponse(BaseModel):
     idw_weight: float
     normalized_weight: float
     contribution: float
+    residual: float
+    residual_contribution: float
+    baseline_distance_miles: float
+    baseline_distance_source: str
 
 
 class CoverageResponse(BaseModel):
@@ -78,6 +83,11 @@ class EstimateResponse(BaseModel):
     is_observed: bool
     k: int
     p: float
+    baseline_fixed_cost: float | None
+    baseline_per_mile_rate: float | None
+    distance_baseline: float | None
+    baseline_distance_miles: float | None
+    baseline_distance_source: str | None
     max_observation_distance_miles: float
     coverage: CoverageResponse | None
     nearest_available_observation_distance_miles: float | None = None
@@ -99,6 +109,15 @@ def _load_rows() -> list[tuple[str, Observation]]:
             )
             for row in rows
         ]
+
+
+@lru_cache(maxsize=1)
+def _load_route_miles() -> dict[str, dict[str, float]]:
+    by_origin: dict[str, dict[str, float]] = {}
+    with ROUTE_MILES_FILE.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            by_origin.setdefault(row["origin_id"], {})[row["destination_zip"]] = float(row["osrm_driving_miles"])
+    return by_origin
 
 
 def _destination_response(location: Location, *, has_observation: bool = True) -> DestinationResponse:
@@ -159,9 +178,11 @@ async def get_estimate(request: EstimateRequest) -> EstimateResponse:
         estimate = estimate_cost(
             target,
             all_rows,
+            origin=Location(origin.id, origin.name, origin.latitude, origin.longitude),
             k=request.k,
             power=request.p,
             max_observation_distance_miles=request.max_observation_distance_miles,
+            driving_miles=_load_route_miles().get(origin.id, {}),
         )
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
@@ -175,6 +196,11 @@ async def get_estimate(request: EstimateRequest) -> EstimateResponse:
             is_observed=False,
             k=request.k,
             p=request.p,
+            baseline_fixed_cost=None,
+            baseline_per_mile_rate=None,
+            distance_baseline=None,
+            baseline_distance_miles=None,
+            baseline_distance_source=None,
             max_observation_distance_miles=request.max_observation_distance_miles,
             coverage=_coverage_response(estimate.coverage),
             nearest_available_observation_distance_miles=estimate.nearest_available_observation_distance_miles,
@@ -192,6 +218,11 @@ async def get_estimate(request: EstimateRequest) -> EstimateResponse:
         is_observed=estimate.is_observed,
         k=request.k,
         p=estimate.power,
+        baseline_fixed_cost=estimate.baseline_fixed_cost,
+        baseline_per_mile_rate=estimate.baseline_per_mile_rate,
+        distance_baseline=estimate.distance_baseline,
+        baseline_distance_miles=estimate.baseline_distance_miles,
+        baseline_distance_source=estimate.baseline_distance_source,
         max_observation_distance_miles=estimate.max_observation_distance_miles,
         coverage=_coverage_response(estimate.coverage) if estimate.coverage else None,
         neighbors=[
@@ -202,6 +233,10 @@ async def get_estimate(request: EstimateRequest) -> EstimateResponse:
                 idw_weight=item.idw_weight,
                 normalized_weight=item.normalized_weight,
                 contribution=item.contribution,
+                residual=item.residual,
+                residual_contribution=item.residual_contribution,
+                baseline_distance_miles=item.baseline_distance_miles,
+                baseline_distance_source=item.baseline_distance_source,
             )
             for item in neighbors
         ],
