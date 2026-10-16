@@ -1,0 +1,12 @@
+services:
+  frontend:
+    ports: !reset []
+    networks:
+      default:
+      web:
+        aliases:
+          - freight-frontend
+
+networks:
+  web:
+    external: true
