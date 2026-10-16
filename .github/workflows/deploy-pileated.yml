@@ -1,0 +1,26 @@
+name: Deploy Freight Estimation to Pileated
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: freight-estimation-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Pileated
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+      - pileated-deploy
+
+    steps:
+      - name: Deploy Freight Estimation
+        run: sudo -n /usr/local/lib/homelab-deploy/freight-estimation
