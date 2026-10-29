@@ -98,8 +98,8 @@ export default function App() {
   return (
     <main className="page-shell">
       <header className="topbar">
-        <a className="wordmark" href="#top"><span className="brand-mark">F</span><span>FIELDNOTE <small>FREIGHT INTELLIGENCE</small></span></a>
-        <div className="topbar-right"><span className="status-dot" /> SYNTHETIC DATASET <span className="topbar-divider" /> PROTOTYPE · 01</div>
+        <a className="wordmark" href="#top"><img className="brand-mark" src="/favicon.svg" alt="" /><span>FREIGHT INTELLIGENCE</span></a>
+        <div className="topbar-right"><span className="status-dot" /> SYNTHETIC DATASET</div>
       </header>
 
       <section className="intro" id="top">
